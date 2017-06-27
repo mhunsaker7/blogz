@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+    textarea {
+                margin: 10px 0;
+                width: 540px;
+                height: 120px;
+            }
+    </style>
+    <h1>Add a blog entry!</h1>
+    <form method='post'>
+        <label>
+            Title for your new blog:
+            <input type="text" name='title' />
+        </label>
+        <div><label>
+            Your new blog:
+            <p><textarea type="text" name="body"></textarea></p>
+        </label></div>
+        <input type="submit" value='Add Entry' />
+    </form>
+
+{% endblock %}
