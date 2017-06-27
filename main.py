@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -27,19 +27,24 @@ def get_blog_posts():
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def index():
-
+    
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
+        if title == '':
+            flash('Please enter a title for your new blog post')
+            return redirect('/newpost')
+        if body == '':
+            flash('Please enter a body for your new blog post')
+            return redirect('/newpost')
         blog = Blog(title=title, body=body)
-        db.session.add()
+        db.session.add(blog)
         db.session.commit()
         return redirect("/blog")
 
-    blogs = Blog.query.all()
-    return render_template('newpost.html', blogs=blogs)
+    return render_template('newpost.html')
 
-
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RU'
 
 if __name__ == '__main__':
     app.run()

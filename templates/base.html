@@ -5,10 +5,19 @@
         <a href="blog">Main Blog Page</a> | <a href="newpost">Add a Blog Entry</a>
         <title>Build A Blog</title>
     </head>
-<body>
+    <body>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
 
-    {% block content %}
-    {% endblock %}
 
-</body>
+        {% block content %}
+        {% endblock %}
+    </body>
 </html>
