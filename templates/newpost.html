@@ -4,7 +4,7 @@
     <style>
     textarea {
                 margin: 10px 0;
-                width: 540px;
+                width: 400px;
                 height: 120px;
             }
     </style>
@@ -12,12 +12,12 @@
     <form method='post'>
         <label>
             Title for your new blog:
-            <input type="text" name='title' value="{{ title }}"/>
+            <input type="text" name='title' value='{{title}}'/>
         </label>
-        <div><label>
+        <p><div><label>
             Your new blog:
-            <p><textarea type="text" name="body" value="{{ body }}"></textarea></p>
-        </label></div>
+            <p><textarea type="text" name="body">{{body}}</textarea></p>
+        </label></div></p>
         <input type="submit" value='Add Entry' />
     </form>
 
