@@ -25,8 +25,13 @@ def blog_posts():
 def get_blog_posts():
     return Blog.query.all()
 
+@app.route('/')  
+def home():
+    return render_template('blog.html', blogs = get_blog_posts())
+
 @app.route('/newpost', methods=['POST', 'GET'])
 def index():
+    
     
     if request.method == 'POST':
         title = request.form['title']
