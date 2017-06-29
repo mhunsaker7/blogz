@@ -5,11 +5,9 @@
 
 
   {% for blog in blogs %}
-    id = blog.id 
-    <h3><a href='/blog?id=' + id>{{ blog.title }}</a></h3>
-      <h3>{{ blog.title }}</h3>
-      <p>{{ blog.body }}<p>
-      <hr>
+    <h3><a href='/blog?id={{ blog.id }}'>{{ blog.title }}</a></h3>
+    <p>{{ blog.body }}<p>
+    <hr>
 
   {% endfor %}
 

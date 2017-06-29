@@ -45,9 +45,10 @@ def index():
         blog = Blog(title=title, body=body)
         db.session.add(blog)
         db.session.commit()
-        return redirect("/blog")
+        return render_template('blogpost.html', title=title, body=body  )
     
     return render_template('newpost.html')
+
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RU'
 
