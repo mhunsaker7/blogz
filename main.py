@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:hunsam3l@localhost:8889/build-a-blog'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:abc123@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
@@ -56,7 +56,7 @@ def index():
         blog = Blog(title=title, body=body)
         db.session.add(blog)
         db.session.commit()
-        return render_template('blogpost.html', title=title, body=body)
+        return redirect('/blog?id=' + str(blog.id))
     
     return render_template('newpost.html')
 
