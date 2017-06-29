@@ -1,3 +1,4 @@
+#contributor=spencer hirata
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -20,7 +21,17 @@ class Blog(db.Model):
 
 @app.route('/blog', methods=['GET']) 
 def blog_posts():
-    return render_template('blog.html', blogs = get_blog_posts())
+    print(request.args)
+
+    if request.args.get('id') == None:
+        return render_template('blog.html', blogs = get_blog_posts())
+    else:
+        new_id = request.args.get('id')
+        blog_post = db.session.query(Blog).filter_by(id=new_id).first()
+        body = blog_post.body
+        title = blog_post.title
+        return render_template('blogpost.html', title=title, body=body)
+
 
 def get_blog_posts():
     return Blog.query.all()
@@ -45,7 +56,7 @@ def index():
         blog = Blog(title=title, body=body)
         db.session.add(blog)
         db.session.commit()
-        return render_template('blogpost.html', title=title, body=body  )
+        return render_template('blogpost.html', title=title, body=body)
     
     return render_template('newpost.html')
 
