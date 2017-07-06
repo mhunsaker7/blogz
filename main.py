@@ -31,7 +31,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['signup', 'login']
+    allowed_routes = ['signup', 'login', 'index', 'blog_posts']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/signup')
 
@@ -44,15 +44,19 @@ def logout():
 def blog_posts():
     print(request.args)
 
-    if request.args.get('id') == None:
-        return render_template('blog.html', blogs = get_blog_posts())
-    else:
+    if request.args.get('id') != None:
         new_id = request.args.get('id')
         blog_post = db.session.query(Blog).filter_by(id=new_id).first()
         body = blog_post.body
         title = blog_post.title
         return render_template('blogpost.html', title=title, body=body)
-
+    if request.args.get('user') != None:
+        new_user = request.args.get('user')
+        user = db.session.query(User).filter_by(id=new_user).first()
+        posts = db.session.query(Blog).filter_by(owner_id=new_user).all()
+        return render_template('blogbyuser.html', blogs=posts, user=user)
+    else:
+        return render_template('blog.html', blogs = get_blog_posts())
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -106,11 +110,12 @@ def get_blog_posts():
     return Blog.query.all()
 
 @app.route('/')  
-def home():
-    return render_template('blog.html', blogs = get_blog_posts())
+def index():
+    users = User.query.all()
+    return render_template('index.html', users=users)
 
 @app.route('/newpost', methods=['POST', 'GET'])
-def index():
+def newpost():
     
     owner = User.query.filter_by(username=session['username']).first()
     
@@ -129,6 +134,8 @@ def index():
         return redirect('/blog?id=' + str(blog.id))
     
     return render_template('newpost.html')
+
+
 
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RU'
