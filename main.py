@@ -49,7 +49,10 @@ def blog_posts():
         blog_post = db.session.query(Blog).filter_by(id=new_id).first()
         body = blog_post.body
         title = blog_post.title
-        return render_template('blogpost.html', title=title, body=body)
+        owner = blog_post.owner.username
+        new_owner = db.session.query(User).filter_by(username=owner).first()
+        owner_id = new_owner.id
+        return render_template('blogpost.html', title=title, body=body, owner=owner, owner_id=owner_id)
     if request.args.get('user') != None:
         new_user = request.args.get('user')
         user = db.session.query(User).filter_by(id=new_user).first()

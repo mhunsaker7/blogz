@@ -2,8 +2,10 @@
 
 {% block content %}
 
-
 <h2 style="text-align: center;">{{title}}</h2>
 <p> {{body}} </p>
+
+<p><em>written by <a href='/blog?user={{ owner_id }}'>{{ owner }}</a></em></p>
+
 
 {% endblock %}
